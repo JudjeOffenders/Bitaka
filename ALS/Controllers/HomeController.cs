@@ -10,7 +10,7 @@ namespace ALS.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("List", "Ad");
         }
 
     }

@@ -27,8 +27,18 @@ namespace ALS.Controllers
             using (var database = new AdsDbContext())
             {
                 //Get ads from database
+                var ads = database.Ads
+                    .Select(a => new AdListingModel
+                    {
+                        Id = a.Id,
+                        Title = a.Title,
+                        Category = a.Category,
+                        Price = a.Price,
+                        MainPicture = a.Pictures.FirstOrDefault()
+                    })
+                    .ToList();
+                return View(ads);
             }
-            return View();
         }
 
         //GET: Ads/Create
@@ -111,6 +121,7 @@ namespace ALS.Controllers
                     .Where(a => a.Id == id)
                     .Select(a => new AdDetailsModel
                     {
+                        Id = a.Id,
                         Title = a.Title,
                         Category = a.Category,
                         City = a.City,
