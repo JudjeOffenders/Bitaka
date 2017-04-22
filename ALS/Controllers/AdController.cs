@@ -141,5 +141,11 @@ namespace ALS.Controllers
                 return View(ad);
             }
         }
+
+        // GET: Article/edit
+        public ActionResult Edit( int? id)
+        {
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
