@@ -13,6 +13,14 @@ namespace ALS.Controllers
 {
     public class AdController : Controller
     {
+        [Authorize]
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+
         // GET: Ad
         public ActionResult Index()
         {
