@@ -1,0 +1,50 @@
+﻿@model ALS.Models.Ad.AdDetailsModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <article>
+        <header>
+            <h2>
+                @Model.Title
+            </h2>
+        </header>
+        <p>
+            @Model.Category
+        </p>
+        <p>
+            @Model.City
+        </p>
+        <p>
+            @Model.Content
+        </p>
+        <p>
+            @Model.Price
+        </p>
+        <p>
+            @Model.DateAdded
+        </p>
+        @foreach (var picture in Model.Pictures)
+        {
+            <div>
+                <img src="@picture.FilePath" , width="100" , class="img-responsive"/>
+            </div>
+        }
+        <p>
+            @Model.Contact
+        </p>
+        <footer class="pull-right">
+                @*@Html.ActionLink("Edit", "Edit", "Article", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
+                @Html.ActionLink("Delete", "Delete", "Article", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })*@
+
+            @Html.ActionLink("Back", "Index", "Ad", null, new { @class = "btn btn-default btn-xs" })
+        </footer>
+    </article>
+</div>
+<hr />
+
+
+
+
