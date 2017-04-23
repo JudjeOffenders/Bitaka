@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ALS.Data
+﻿namespace ALS.Data
 {
+    using System.ComponentModel.DataAnnotations;
 
     public enum Cities
     {

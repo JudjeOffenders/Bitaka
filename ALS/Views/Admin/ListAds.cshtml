@@ -1,0 +1,43 @@
+﻿@model List<ALS.Models.Ad.AdStatusListModel>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="container">
+    <div class="well">
+        <h2>Ads</h2>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Author</th>
+                    <th>Added</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var ad in Model)
+                {
+                    <tr>
+                        <td>@ad.Id</td>
+                        <td>@ad.Title</td>
+                        <td>@ad.Category</td>
+                        <td>@ad.Author</td>
+                        <td>@ad.DateAdded</td>
+                        <td>@ad.Status</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", "Ad", new { @id = ad.Id }, null)
+                            @Html.ActionLink("Delete", "Delete", "Ad", new { @id = ad.Id }, null)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

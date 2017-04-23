@@ -197,9 +197,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Data\Ad.cs" />
+    <Compile Include="Data\AdStatus.cs" />
     <Compile Include="Data\Cities.cs" />
     <Compile Include="Data\Pictures.cs" />
     <Compile Include="Global.asax.cs">
@@ -213,6 +215,7 @@
     <Compile Include="Models\Ad\AdDetailsModel.cs" />
     <Compile Include="Models\Ad\AdEditModel.cs" />
     <Compile Include="Models\Ad\AdListingModel.cs" />
+    <Compile Include="Models\Ad\AdStatusListModel.cs" />
     <Compile Include="Models\Ad\CreateAdModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -277,6 +280,7 @@
     <Content Include="Views\Ad\List.cshtml" />
     <Content Include="Views\Ad\Edit.cshtml" />
     <Content Include="Views\Ad\Delete.cshtml" />
+    <Content Include="Views\Admin\ListAds.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

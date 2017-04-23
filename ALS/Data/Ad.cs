@@ -45,7 +45,7 @@
             return this.Author.UserName.Equals(name);
         }
 
-
+        public AdStatus Status { get; set; }
 
     }
 }

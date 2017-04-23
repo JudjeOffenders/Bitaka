@@ -173,7 +173,8 @@ namespace ALS.Controllers
                     Price = model.Price,
                     Pictures = model.Pictures,
                     AuthorId = authorId,
-                    DateAdded = DateTime.Now
+                    DateAdded = DateTime.Now,
+                    Status = 0
                 };
 
                 //save article in DB
