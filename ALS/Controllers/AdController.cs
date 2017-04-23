@@ -15,9 +15,78 @@ namespace ALS.Controllers
     {
         [Authorize]
         [HttpGet]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (var database = new AdsDbContext())
+            {
+                var ad = database.Ads
+                    .Where(a => a.Id == id)
+                    .First();
+
+                if (ad == null)
+                {
+                    return HttpNotFound();
+                }
+
+                var adDeletingModel = new AdDeletingModel
+                {
+                    Id = ad.Id,
+                    Title = ad.Title,
+                    Category = ad.Category,
+                    Price = ad.Price,
+                    Pictures = ad.Pictures.ToList()
+                };
+
+                return View(adDeletingModel);
+            }
+           
+        }
+
+        [Authorize]
+        [ActionName("Delete")]
+        [HttpPost]
+        public ActionResult ConfirmDelete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (var database = new AdsDbContext())
+            {
+                var ad = database.Ads
+                    .Where(a => a.Id == id)
+                    .First();
+
+                var pictures = database.Pictures
+                    .Where(p => p.Ad.Id == id)
+                    .ToList();
+
+                if (ad == null)
+                {
+                    return HttpNotFound();
+                }
+
+                //database.Pictures.Where(a => a.Id == id).ToList().ForEach(database.tblA.DeleteObject);
+                //database.Pictures.Where(p => p.Id == id)
+                //.ToList().ForEach(p => database.Pictures.Remove(p));
+
+                database.Ads.Remove(ad);
+
+                foreach (var picture in pictures)
+                {
+                    database.Pictures.Remove(picture);
+                }
+                database.Ads.Remove(ad);
+                database.SaveChanges();
+
+                return RedirectToAction("List");
+            }
         }
 
 
