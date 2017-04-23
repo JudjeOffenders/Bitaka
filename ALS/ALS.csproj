@@ -210,6 +210,7 @@
     <Compile Include="Data\AdsDBContext.cs" />
     <Compile Include="Data\User.cs" />
     <Compile Include="Models\Ad\AdDetailsModel.cs" />
+    <Compile Include="Models\Ad\AdEditModel.cs" />
     <Compile Include="Models\Ad\AdListingModel.cs" />
     <Compile Include="Models\Ad\CreateAdModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -273,6 +274,7 @@
     <Content Include="Views\Ad\Create.cshtml" />
     <Content Include="Views\Ad\Details.cshtml" />
     <Content Include="Views\Ad\List.cshtml" />
+    <Content Include="Views\Ad\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

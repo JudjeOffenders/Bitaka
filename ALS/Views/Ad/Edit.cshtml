@@ -1,0 +1,71 @@
+﻿@model ALS.Models.Ad.AdEditModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container">
+    <div class="well">
+        <h2>Edit Article</h2>
+        @using (Html.BeginForm("Edit", "Ad", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Title, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Category, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.Category, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.City, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.EnumDropDownListFor(m => m.City, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Content, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @rows = "7" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Price, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+                </div>
+            </div>
+
+            foreach (var picture in Model.Pictures)
+            {
+                <div class="form-group">
+                    <span>
+                        <label for="delete" class="control-label col-sm-4">Delete</label>
+                        <input type="checkbox" id="@picture.Id" name="deleted" value="@picture.Id" margin="0px" /> 
+                    </span>                                    
+                    <img src="@picture.FilePath" , width="100" , class = "img-thumbnail" />                                  
+                </div>
+            }
+            <div class="form-group">
+                <label for="file" class="control-label col-sm-4">Filename:</label>
+                <div class="col-sm-4">
+                    <input type="file" name="upload" id="file" multiple="multiple" class="form-control" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    @Html.ActionLink("Cancel", "Details", "Ad", new { @id = Model.Id }, new { @class = "btn btn-default" })
+                    <input type="submit" value="Edit" class="btn btn-success" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

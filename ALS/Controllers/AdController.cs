@@ -150,10 +150,100 @@ namespace ALS.Controllers
             }
         }
 
-        // GET: Article/edit
-        public ActionResult Edit( int? id)
+        //
+        // GET: Article/Edit
+        public ActionResult Edit(int? id)
         {
-            return RedirectToAction("Index", "Home");
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (var database = new AdsDbContext())
+            {
+                var ad = database.Ads
+                    .Where(a => a.Id == id)
+                    .Select(a => new AdEditModel
+                    {
+                        Id = a.Id,
+                        Title = a.Title,
+                        Category = a.Category,
+                        City = a.City,
+                        Content = a.Content,
+                        Price = a.Price,
+                        Pictures = a.Pictures.ToList()
+                    })
+                    .First();
+
+                if (ad == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(ad);
+            }
+        }
+
+        //
+        // POST: Article/Edit
+        [HttpPost]
+        [Authorize]
+        public ActionResult Edit(AdEditModel model, IEnumerable<HttpPostedFileBase> upload, int[] deleted)
+        {
+            if (ModelState.IsValid)
+            {
+
+                model.Pictures = new List<Pictures>();
+
+
+                //uploads and saves newly added pictures
+                foreach (var picture in upload)
+                {
+                    if (picture != null && picture.ContentLength > 0)
+                    {
+                        var fileName = picture.FileName;
+                        var path = Server.MapPath("~/Content/Pictures/") + fileName;
+                        picture.SaveAs(path);
+                        var currentPicture = new Pictures
+                        {
+                            FilePath = "/Content/Pictures/" + fileName
+                        };
+
+                        model.Pictures.Add(currentPicture);
+                    }
+                }
+
+                using (var database = new AdsDbContext())
+                {
+                    var adToEdit = database.Ads
+                        .FirstOrDefault(a => a.Id == model.Id);
+
+                    adToEdit.Title = model.Title;
+                    adToEdit.Category = model.Category;
+                    adToEdit.City = model.City;
+                    adToEdit.Content = model.Content;
+                    adToEdit.Price = model.Price;
+                    adToEdit.Pictures = model.Pictures;
+
+                    if (!(deleted == null))
+                    foreach (var delId in deleted)
+                    {
+                        var picToDelete = database.Pictures
+                            .Where(p => p.Id == delId)
+                            .First();
+
+                        database.Pictures.Remove(picToDelete);
+                    }
+
+                    database.Entry(adToEdit).State = EntityState.Modified;
+                    database.SaveChanges();
+
+                    return RedirectToAction("Details", new { id = adToEdit.Id });
+                }
+            }
+
+            return View(model);
         }
     }
 }
