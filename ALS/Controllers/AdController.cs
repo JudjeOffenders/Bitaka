@@ -28,6 +28,13 @@ namespace ALS.Controllers
                     .Where(a => a.Id == id)
                     .First();
 
+
+                // Check if User is the author or Admin (method below + added new method IsAuthor in Ad.cs)
+                if (!IsUserAuthorizedToEdit(ad))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }
+
                 if (ad == null)
                 {
                     return HttpNotFound();
@@ -82,7 +89,7 @@ namespace ALS.Controllers
                 {
                     database.Pictures.Remove(picture);
                 }
-                database.Ads.Remove(ad);
+               
                 database.SaveChanges();
 
                 return RedirectToAction("List");
@@ -206,7 +213,8 @@ namespace ALS.Controllers
                         Price = a.Price,
                         DateAdded = a.DateAdded,
                         Pictures = a.Pictures.ToList(),
-                        Contact = a.Author.Email
+                        Contact = a.Author.Email,
+                        UserName = a.Author.UserName
                     })
                     .First();
 
@@ -231,19 +239,26 @@ namespace ALS.Controllers
 
             using (var database = new AdsDbContext())
             {
-                var ad = database.Ads
+                var adDb = database.Ads
                     .Where(a => a.Id == id)
-                    .Select(a => new AdEditModel
-                    {
-                        Id = a.Id,
-                        Title = a.Title,
-                        Category = a.Category,
-                        City = a.City,
-                        Content = a.Content,
-                        Price = a.Price,
-                        Pictures = a.Pictures.ToList()
-                    })
                     .First();
+
+                var ad = new AdEditModel
+                {
+                    Id = adDb.Id,
+                    Title = adDb.Title,
+                    Category = adDb.Category,
+                    City = adDb.City,
+                    Content = adDb.Content,
+                    Price = adDb.Price,
+                    Pictures = adDb.Pictures.ToList()
+                };
+
+                // Check if User is the author or Admin (method below + added new method IsAuthor in Ad.cs)
+                if (!IsUserAuthorizedToEdit(adDb))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                }
 
                 if (ad == null)
                 {
@@ -313,6 +328,14 @@ namespace ALS.Controllers
             }
 
             return View(model);
+        }
+
+        private bool IsUserAuthorizedToEdit(Ad ad)
+        {
+            bool isAdmin = this.User.IsInRole("Admin");
+            bool isAuthor = ad.IsAuthor(this.User.Identity.Name);
+
+            return isAdmin || isAuthor;
         }
     }
 }

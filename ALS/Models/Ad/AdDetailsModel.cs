@@ -23,5 +23,12 @@ namespace ALS.Models.Ad
         public List<Pictures> Pictures { get; set; }
 
         public string Contact { get; set; }
+
+        public string UserName { get; set; }
+
+        public bool IsAuthor(string name)
+        {
+            return this.UserName.Equals(name);
+        }
     }
 }

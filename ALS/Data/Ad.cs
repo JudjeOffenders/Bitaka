@@ -39,5 +39,13 @@
         }
 
         public virtual ICollection<Pictures> Pictures { get; set; }
+
+        public bool IsAuthor(string name)
+        {
+            return this.Author.UserName.Equals(name);
+        }
+
+
+
     }
 }
