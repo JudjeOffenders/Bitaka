@@ -22,6 +22,7 @@ namespace ALS.Models.Ad
         [Required]
         public string Content { get; set; }
 
+        [Required]
         public decimal Price { get; set; }
 
         //check for proper declaration

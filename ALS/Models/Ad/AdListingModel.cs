@@ -14,5 +14,7 @@
 
         public Pictures MainPicture { get; set; }
 
+        public AdStatus Status { get; set; }
+
     }
 }

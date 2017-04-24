@@ -5,7 +5,7 @@ namespace ALS.Data
     public enum AdStatus
     {
         Pending,
-        Aproved,
+        Normal,
         VIP
     }
 

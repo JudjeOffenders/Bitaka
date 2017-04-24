@@ -51,7 +51,7 @@ namespace ALS.Controllers
 
                 return View(adDeletingModel);
             }
-           
+
         }
 
         [Authorize]
@@ -89,7 +89,7 @@ namespace ALS.Controllers
                 {
                     database.Pictures.Remove(picture);
                 }
-               
+
                 database.SaveChanges();
 
                 return RedirectToAction("List");
@@ -112,13 +112,17 @@ namespace ALS.Controllers
             {
                 //Get ads from database
                 var ads = database.Ads
+                    .Where(a => a.Status != AdStatus.Pending)
+                    .OrderByDescending(a => a.Status)
+                    .ThenByDescending(a => a.Id)
                     .Select(a => new AdListingModel
                     {
                         Id = a.Id,
                         Title = a.Title,
                         Category = a.Category,
                         Price = a.Price,
-                        MainPicture = a.Pictures.FirstOrDefault()
+                        MainPicture = a.Pictures.FirstOrDefault(),
+                        Status = a.Status
                     })
                     .ToList();
                 return View(ads);
@@ -312,14 +316,14 @@ namespace ALS.Controllers
                     adToEdit.Pictures = model.Pictures;
 
                     if (!(deleted == null))
-                    foreach (var delId in deleted)
-                    {
-                        var picToDelete = database.Pictures
-                            .Where(p => p.Id == delId)
-                            .First();
+                        foreach (var delId in deleted)
+                        {
+                            var picToDelete = database.Pictures
+                                .Where(p => p.Id == delId)
+                                .First();
 
-                        database.Pictures.Remove(picToDelete);
-                    }
+                            database.Pictures.Remove(picToDelete);
+                        }
 
                     database.Entry(adToEdit).State = EntityState.Modified;
                     database.SaveChanges();
@@ -337,6 +341,81 @@ namespace ALS.Controllers
             bool isAuthor = ad.IsAuthor(this.User.Identity.Name);
 
             return isAdmin || isAuthor;
+        }
+
+        private void ChangeStatus(int? id, string status)
+        {
+            using (var database = new AdsDbContext())
+            {
+                var ad = database.Ads
+                    .Where(a => a.Id == id)
+                    .First();
+                if (status == "Normal")
+                {
+                    ad.Status = AdStatus.Normal;
+                }
+                else
+                {
+                    ad.Status = AdStatus.VIP;
+                }
+
+                database.Entry(ad).State = EntityState.Modified;
+                database.SaveChanges();
+
+            }
+
+        }
+
+        //Approve ad by Admin
+        [Authorize(Roles = "Admin")]
+        public ActionResult Approve(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ChangeStatus(id, "Normal");
+
+            return RedirectToAction("ListAdsStatus", "Ad");
+        }
+
+
+        //Make ad VIP by Admin
+        [Authorize(Roles = "Admin")]
+        public ActionResult MakeVIP(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ChangeStatus(id, "VIP");
+
+            return RedirectToAction("ListAdsStatus", "Ad");
+
+        }
+
+        public ActionResult ListAdsStatus()
+        {
+            using (var database = new AdsDbContext())
+            {
+                //Get ads from database
+                var ads = database.Ads
+                    .Select(a => new AdStatusListModel
+                    {
+                        Id = a.Id,
+                        Title = a.Title,
+                        Category = a.Category,
+                        Author = a.Author.UserName,
+                        DateAdded = a.DateAdded,
+                        Status = a.Status
+                    })
+                    .OrderBy(a => a.Status)
+                    .ThenByDescending(a => a.DateAdded)
+                    .ToList();
+                return View(ads);
+            }
         }
     }
 }

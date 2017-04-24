@@ -11,7 +11,13 @@
             <img src="@ad.MainPicture.FilePath"  width="500" class="img-responsive" />
         </div>
         <div class="col-md-6">
-            <h2>@ad.Title</h2>
+            <h2>
+                @if (ad.Status == ALS.Data.AdStatus.VIP)
+                {
+                    <strong style="background-color:red">VIP</strong>
+                }
+                @ad.Title
+            </h2>
             <h4>Price: @ad.Price</h4>
             <a class="btn btn-default" href="/Ad/Details/@ad.Id">Details</a>
         </div>

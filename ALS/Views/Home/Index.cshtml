@@ -17,7 +17,13 @@
     @foreach (var ad in Model)
     {
         <div class="col-md-4">
-            <h2>@ad.Title</h2>
+            <h2>
+                @if (ad.Status == ALS.Data.AdStatus.VIP)
+                {
+                    <strong style="background-color:red">VIP</strong>
+                }
+                @ad.Title                
+            </h2>
             <h4>Price: @ad.Price</h4>
             <p>
                 <img src="@ad.MainPicture.FilePath" , class="img-responsive" />

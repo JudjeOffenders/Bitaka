@@ -17,6 +17,7 @@
                     <th>Author</th>
                     <th>Added</th>
                     <th>Status</th>
+                    <th>Change Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -32,6 +33,10 @@
                         <td>@ad.DateAdded</td>
                         <td>@ad.Status</td>
                         <td>
+                            @Html.ActionLink("Normal", "Approve", "Ad", new { @id = ad.Id }, new { disabled = "disabled" })
+                            @Html.ActionLink("VIP", "MakeVIP", "Ad", new { @id = ad.Id }, null)
+                        </td>
+                        <td>         
                             @Html.ActionLink("Edit", "Edit", "Ad", new { @id = ad.Id }, null)
                             @Html.ActionLink("Delete", "Delete", "Ad", new { @id = ad.Id }, null)
                         </td>
