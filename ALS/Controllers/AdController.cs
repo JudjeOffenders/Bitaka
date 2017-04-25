@@ -106,15 +106,19 @@ namespace ALS.Controllers
         }
 
         //GET: Ad/List
-        public ActionResult List()
+        public ActionResult List(int page = 1)
         {
             using (var database = new AdsDbContext())
             {
+                var pageSize = 5;
+
                 //Get ads from database
                 var ads = database.Ads
                     .Where(a => a.Status != AdStatus.Pending)
                     .OrderByDescending(a => a.Status)
                     .ThenByDescending(a => a.Id)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
                     .Select(a => new AdListingModel
                     {
                         Id = a.Id,
@@ -125,6 +129,11 @@ namespace ALS.Controllers
                         Status = a.Status
                     })
                     .ToList();
+
+                ViewBag.CurrentPage = page;
+
+
+
                 return View(ads);
             }
         }
