@@ -4,16 +4,15 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h2 class="text-center">Bit@ka best site for selling and buying</h2>
-    <p class="lead text-center">You need more, here you take more!</p>
-    <p class="text-center">
-        <a href="/Ad/Create" class="btn btn-primary btn-lg">Create Ad </a>
-        <a href="/Ad/List" class="btn btn-primary btn-lg">All Ads </a>
-    </p>
-</div>
-
 <div class="row">
+    <div class="jumbotron">
+        <h2 class="text-center">Bit@ka best site for selling and buying</h2>
+        <p class="lead text-center">You need more, here you take more!</p>
+        <p class="text-center">
+            <a href="/Ad/Create" class="btn btn-primary btn-lg">Create Ad </a>
+            <a href="/Ad/List" class="btn btn-primary btn-lg">All Ads </a>
+        </p>
+    </div>
     @foreach (var ad in Model)
     {
         <div class="col-md-4">
@@ -31,4 +30,7 @@
             <p><a class="btn btn-default" href="/Ad/Details/@ad.Id">Details</a></p>
         </div>
     }
+    <footer class="pull-right">
+        <p>&copy; @DateTime.Now.Year - Bit@k@@</p>
+    </footer> 
 </div>

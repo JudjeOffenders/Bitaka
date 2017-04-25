@@ -2151,7 +2151,7 @@ pre code {
     width: 33.33333333%;
   }
   .col-lg-3 {
-    width: 25%;
+    width: 20%;
   }
   .col-lg-2 {
     width: 16.66666667%;
@@ -7055,4 +7055,14 @@ article .author  {
 }
 article .author  {
   content: '\2014 \00A0';
+}
+
+#content-container {
+    display: flex;
+}
+#content-container > .row {
+    flex: 1;
+}
+.body-content {
+    margin-left: 0!important;
 }
