@@ -106,14 +106,22 @@ namespace ALS.Controllers
         }
 
         //GET: Ad/List
-        public ActionResult List(int page = 1)
+        public ActionResult List(int page = 1, string user = null)
         {
             using (var database = new AdsDbContext())
             {
                 var pageSize = 5;
 
+                var adsQuery = database.Ads.AsQueryable();
+
+                if (user != null)
+                {
+                    adsQuery = adsQuery
+                        .Where(a => a.Author.Email == user);
+                }
+
                 //Get ads from database
-                var ads = database.Ads
+                var ads = adsQuery
                     .Where(a => a.Status != AdStatus.Pending)
                     .OrderByDescending(a => a.Status)
                     .ThenByDescending(a => a.Id)

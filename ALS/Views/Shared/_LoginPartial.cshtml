@@ -17,6 +17,9 @@
             </li>
         }
         <li>
+            <a href="/Ad/List?user=@User.Identity.GetUserName()">My Ads</a>
+        </li>
+        <li>
             @Html.ActionLink("Create", "Create", "Ad")
         </li>
         <li>
