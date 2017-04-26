@@ -79,10 +79,6 @@ namespace ALS.Controllers
                     return HttpNotFound();
                 }
 
-                //database.Pictures.Where(a => a.Id == id).ToList().ForEach(database.tblA.DeleteObject);
-                //database.Pictures.Where(p => p.Id == id)
-                //.ToList().ForEach(p => database.Pictures.Remove(p));
-
                 database.Ads.Remove(ad);
 
                 foreach (var picture in pictures)
@@ -139,8 +135,6 @@ namespace ALS.Controllers
                     .ToList();
 
                 ViewBag.CurrentPage = page;
-
-
 
                 return View(ads);
             }
@@ -413,6 +407,8 @@ namespace ALS.Controllers
 
         }
 
+
+        [Authorize(Roles = "Admin")]
         public ActionResult ListAdsStatus()
         {
             using (var database = new AdsDbContext())

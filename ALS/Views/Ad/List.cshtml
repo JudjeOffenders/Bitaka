@@ -13,7 +13,7 @@
     }
     @foreach (var ad in Model)
     {
-        <div class="col-md-6">
+        <div class="col-md-12">
             <h2>
                 @if (ad.Status == ALS.Data.AdStatus.VIP)
                 {
@@ -27,20 +27,23 @@
             <br />
         </div>
     }
-    @{ 
+    @{
         var currentUserQuery = Request.QueryString["user"];
-     }
-
-
-    <p class="text-center">
-        <a href="/Ad/List?page=@(ViewBag.CurrentPage - 1)
+    }
+    <br />
+    <br />
+    <div class="col-md-12">
+        <p class="text-center">
+            <a href="/Ad/List?page=@(ViewBag.CurrentPage - 1)
            @(currentUserQuery != null ? "&user=" + currentUserQuery : string.Empty)" class="btn btn-primary
            @(ViewBag.CurrentPage == 1 ? "disabled" : string.Empty)"><< Previous</a>
-        <a href="/Ad/List?page=@(ViewBag.CurrentPage + 1)
+            <a href="/Ad/List?page=@(ViewBag.CurrentPage + 1)
            @(currentUserQuery != null ? "&user=" + currentUserQuery : string.Empty)" class="btn btn-primary
            @(!Model.Any() || Model.Count() < 5 ? "disabled" : string.Empty)">Next >></a>
-    </p>
-    <br />
+        </p>
+    </div>
 </div>
+
+
 
 

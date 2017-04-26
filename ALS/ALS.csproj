@@ -197,10 +197,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Data\Ad.cs" />
     <Compile Include="Data\AdStatus.cs" />
+    <Compile Include="Data\Category.cs" />
     <Compile Include="Data\Cities.cs" />
     <Compile Include="Data\Pictures.cs" />
     <Compile Include="Global.asax.cs">
@@ -216,6 +218,9 @@
     <Compile Include="Models\Ad\AdListingModel.cs" />
     <Compile Include="Models\Ad\AdStatusListModel.cs" />
     <Compile Include="Models\Ad\CreateAdModel.cs" />
+    <Compile Include="Models\Category\CategoryCreateModel.cs" />
+    <Compile Include="Models\Category\CategoryModifyModel.cs" />
+    <Compile Include="Models\Category\CategoryListingModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -280,6 +285,10 @@
     <Content Include="Views\Ad\Edit.cshtml" />
     <Content Include="Views\Ad\Delete.cshtml" />
     <Content Include="Views\Ad\ListAdsStatus.cshtml" />
+    <Content Include="Views\Category\List.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

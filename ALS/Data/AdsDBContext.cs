@@ -15,6 +15,8 @@ namespace ALS.Data
 
         public virtual IDbSet<Pictures> Pictures { get; set; }
 
+        public virtual IDbSet<Category> Categories { get; set; }
+
         public static AdsDbContext Create()
         {
             return new AdsDbContext();
