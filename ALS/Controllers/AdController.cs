@@ -102,7 +102,7 @@ namespace ALS.Controllers
         }
 
         //GET: Ad/List
-        public ActionResult List(int page = 1, string user = null)
+        public ActionResult List(int? id, int page = 1, string user = null)
         {
             using (var database = new AdsDbContext())
             {
@@ -115,10 +115,18 @@ namespace ALS.Controllers
                     adsQuery = adsQuery
                         .Where(a => a.Author.Email == user);
                 }
+                else
+                {
+                    adsQuery = adsQuery.Where(a => a.Status != AdStatus.Pending);
+                }
 
-                //Get ads from database
+                if (id != null)
+                {
+                    adsQuery = adsQuery
+                        .Where(a => a.CategoryId == id);
+                }
+
                 var ads = adsQuery
-                    .Where(a => a.Status != AdStatus.Pending)
                     .OrderByDescending(a => a.Status)
                     .ThenByDescending(a => a.Id)
                     .Skip((page - 1) * pageSize)

@@ -9,7 +9,7 @@
         <p style="list-group-item">Categories</p>
         @foreach (var category in Model)
         {           
-            @Html.ActionLink($"{category.Name} ({category.AdsNumber})" , "Edit", "Category", new { @id = category.Id }, new {@class="list-group-item"})
+            @Html.ActionLink($"{category.Name} ({category.AdsNumber})" , "List", "Ad", new { @id = category.Id }, new {@class="list-group-item"})
         }
     </div>
 </div>

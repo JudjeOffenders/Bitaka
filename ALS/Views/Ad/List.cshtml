@@ -19,6 +19,10 @@
                 {
                     <strong style="background-color:red">VIP</strong>
                 }
+                @if (ad.Status == ALS.Data.AdStatus.Pending)
+                {
+                    <strong style="background-color:red">Pending</strong>
+                }
                 @ad.Title
             </h2>
             <h4>Price: @ad.Price</h4>
