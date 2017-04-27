@@ -21,7 +21,7 @@
                 {
                     Id = a.Id,
                     Title = a.Title,
-                    Category = a.Category,
+                    Category = a.Category.Name,
                     Price = a.Price,
                     MainPicture = a.Pictures.FirstOrDefault(),
                     Status = a.Status

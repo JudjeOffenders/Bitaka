@@ -44,7 +44,7 @@ namespace ALS.Controllers
                 {
                     Id = ad.Id,
                     Title = ad.Title,
-                    Category = ad.Category,
+                    Category = ad.Category.Name,
                     Price = ad.Price,
                     Pictures = ad.Pictures.ToList()
                 };
@@ -127,7 +127,7 @@ namespace ALS.Controllers
                     {
                         Id = a.Id,
                         Title = a.Title,
-                        Category = a.Category,
+                        Category = a.Category.Name,
                         Price = a.Price,
                         MainPicture = a.Pictures.FirstOrDefault(),
                         Status = a.Status
@@ -140,12 +140,21 @@ namespace ALS.Controllers
             }
         }
 
+        //
         //GET: Ads/Create
         [Authorize]
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            using (var database = new AdsDbContext())
+            {
+                var model = new CreateAdModel();
+                model.Categories = database.Categories
+                    .OrderBy(c => c.Name)
+                    .ToList();
+
+                return View(model);
+            }
         }
 
         //POST: Article/Create
@@ -182,7 +191,7 @@ namespace ALS.Controllers
                 var ad = new Ad
                 {
                     Title = model.Title,
-                    Category = model.Category,
+                    CategoryId = model.CategoryId,
                     City = model.City,
                     Content = model.Content,
                     Price = model.Price,
@@ -223,7 +232,7 @@ namespace ALS.Controllers
                     {
                         Id = a.Id,
                         Title = a.Title,
-                        Category = a.Category,
+                        Category = a.Category.Name,
                         City = a.City,
                         Content = a.Content,
                         Price = a.Price,
@@ -263,7 +272,10 @@ namespace ALS.Controllers
                 {
                     Id = adDb.Id,
                     Title = adDb.Title,
-                    Category = adDb.Category,
+                    CategoryId = adDb.CategoryId,
+                    Categories = database.Categories
+                        .OrderBy(c => c.Name)
+                        .ToList(),
                     City = adDb.City,
                     Content = adDb.Content,
                     Price = adDb.Price,
@@ -320,7 +332,7 @@ namespace ALS.Controllers
                         .FirstOrDefault(a => a.Id == model.Id);
 
                     adToEdit.Title = model.Title;
-                    adToEdit.Category = model.Category;
+                    adToEdit.CategoryId = model.CategoryId;
                     adToEdit.City = model.City;
                     adToEdit.Content = model.Content;
                     adToEdit.Price = model.Price;
@@ -354,6 +366,8 @@ namespace ALS.Controllers
             return isAdmin || isAuthor;
         }
 
+        //
+        //Method for Aprove/Vip
         private void ChangeStatus(int? id, string status)
         {
             using (var database = new AdsDbContext())
@@ -419,7 +433,7 @@ namespace ALS.Controllers
                     {
                         Id = a.Id,
                         Title = a.Title,
-                        Category = a.Category,
+                        Category = a.Category.Name,
                         Author = a.Author.UserName,
                         DateAdded = a.DateAdded,
                         Status = a.Status

@@ -1,11 +1,8 @@
 ﻿namespace ALS.Models.Ad
 {
     using Data;
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Web;
 
     public class AdEditModel
     {
@@ -16,7 +13,9 @@
         public string Title { get; set; }
 
         [Required]
-        public string Category { get; set; }
+        public int CategoryId { get; set; }
+
+        public List<Category> Categories { get; set; }
 
         [Required]
         public Cities City { get; set; }

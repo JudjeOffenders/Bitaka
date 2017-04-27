@@ -1,9 +1,9 @@
-﻿using ALS.Data;
-using System;
-using System.Collections.Generic;
-
-namespace ALS.Models.Ad
+﻿namespace ALS.Models.Ad
 {
+    using ALS.Data;
+    using System;
+    using System.Collections.Generic;
+
     public class AdDetailsModel
     {
         public int Id { get; set; }

@@ -16,9 +16,6 @@
         public string Title { get; set; }
 
         [Required]
-        public string Category { get; set; }
-
-        [Required]
         public Cities City { get; set; }
 
         [Required]
@@ -46,6 +43,12 @@
         }
 
         public AdStatus Status { get; set; }
+
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
+
+        public virtual Category Category { get; set; }
+
 
     }
 }

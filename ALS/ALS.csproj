@@ -200,6 +200,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SidebarController.cs" />
     <Compile Include="Data\Ad.cs" />
     <Compile Include="Data\AdStatus.cs" />
     <Compile Include="Data\Category.cs" />
@@ -289,6 +290,7 @@
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Sidebar\_CategoriesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
