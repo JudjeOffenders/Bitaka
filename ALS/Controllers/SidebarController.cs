@@ -18,7 +18,9 @@ namespace ALS.Controllers
                     {
                         Id = c.Id,
                         Name = c.Name,
-                        AdsNumber = c.Ads.Count()
+                        AdsNumber = c.Ads
+                        .Where(a => a.Status != AdStatus.Pending)
+                        .Count()
                     })
                     .ToList();
 
