@@ -38,11 +38,10 @@
         <footer class="pull-right">
             @if (User.IsInRole("Admin") || Model.IsAuthor(User.Identity.Name))
             {
-                @Html.ActionLink("Edit", "Edit", "Ad", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
-                @Html.ActionLink("Delete", "Delete", "Ad", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
+                @Html.ActionLink("Edit", "Edit", "Ad", new { @id = Model.Id }, new { @class = "btn btn-success btn-lg" })
+                @Html.ActionLink("Delete", "Delete", "Ad", new { @id = Model.Id }, new { @class = "btn btn-danger btn-lg" })
             }
-
-                @Html.ActionLink("Back", "List", "Ad", null, new { @class = "btn btn-default btn-xs" })
+                <a href="@Request.UrlReferrer" class="btn btn-default btn-sm" title="Back to list">Back</a>
         </footer>
     </article>
 </div>
