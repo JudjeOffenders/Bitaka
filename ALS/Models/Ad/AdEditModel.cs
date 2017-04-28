@@ -13,6 +13,7 @@
         public string Title { get; set; }
 
         [Required]
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
         public List<Category> Categories { get; set; }
