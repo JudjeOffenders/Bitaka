@@ -219,6 +219,14 @@ namespace ALS.Controllers
                 return RedirectToAction("Details", new { id = ad.Id });
             }
 
+            //if model is not valid
+            using (var database = new AdsDbContext())
+            {
+                model.Categories = database.Categories
+               .OrderBy(c => c.Name)
+               .ToList();
+            }
+
             return View(model);
         }
 
@@ -363,7 +371,22 @@ namespace ALS.Controllers
                 }
             }
 
+
+            //if model is not valid
+            using (var database = new AdsDbContext())
+            {
+                model.Categories = database.Categories
+               .OrderBy(c => c.Name)
+               .ToList();
+
+                var adToEdit = database.Ads
+                        .FirstOrDefault(a => a.Id == model.Id);
+
+                model.Pictures = adToEdit.Pictures.ToList();
+            }
+
             return View(model);
+            //return RedirectToAction("Edit", "Ad", model.Id);
         }
 
         private bool IsUserAuthorizedToEdit(Ad ad)

@@ -31,7 +31,10 @@
             </h2>
             <h4>Price: @ad.Price</h4>
             <a class="btn btn-default" href="/Ad/Details/@ad.Id">Details</a>
-            <img src="@ad.MainPicture.FilePath" width="500" class="img-responsive" />
+            @if (ad.MainPicture != null)
+            {
+                <img src="@ad.MainPicture.FilePath" width="500" class="img-responsive" />
+            }
             <br />
         </div>
     }
